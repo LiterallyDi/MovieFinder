@@ -1,4 +1,3 @@
-cat > .gitignore <<EOF
 # Xcode
 .DS_Store
 build/
@@ -35,5 +34,5 @@ fastlane/screenshots
 fastlane/test_output
 
 # Others
-xcuserdata/
+xcuserdata/xcuserdata/
 MovieFinder.xcodeproj/project.xcworkspace/xcuserdata/
