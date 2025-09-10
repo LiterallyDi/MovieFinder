@@ -15,6 +15,8 @@ final class MovieListViewModel: ObservableObject {
     @Published var error: String?
     @Published var query: String = ""
 
+    @Published var newItemsPulse = 0
+
     private let repo: MovieRepository
 
     /// pagination
@@ -27,6 +29,7 @@ final class MovieListViewModel: ObservableObject {
     private var currentRequest: AnyCancellable?
     private var seenIDs = Set<Int>()
 
+    
     init(repository: MovieRepository) {
         self.repo = repository
         bindSearch()

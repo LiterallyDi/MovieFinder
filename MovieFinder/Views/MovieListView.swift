@@ -58,10 +58,12 @@ struct MovieListView: View {
                     .padding(.bottom, 12)
                 }
                 .refreshable { vm.retry() }
+                .sensoryFeedback(.impact(weight: .light), trigger: vm.newItemsPulse)
             }
         }
         .padding(.top, 12)
         .animation(.easeInOut(duration: 0.2), value: vm.movies)
         .onAppear { vm.loadInitial() }
+        .sensoryFeedback(.impact(weight: .medium), trigger: vm.movies.count)
     }
 }
