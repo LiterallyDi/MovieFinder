@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @StateObject private var vm: MovieListViewModel
 
-#Preview {
-    ContentView()
+    init(repository: MovieRepository) {
+        _vm = StateObject(wrappedValue: MovieListViewModel(repository: repository))
+    }
+
+    var body: some View {
+        NavigationStack {
+            MovieListView(vm: vm)
+                .navigationTitle("Movies")
+        }
+    }
 }

@@ -9,30 +9,17 @@ import SwiftUI
 
 @main
 struct MovieFinderApp: App {
-    init() {
-        Task {
-            await fetchPopular()
-        }
-    }
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
-}
-
-func fetchPopular() async {
-    do {
+    private let repository: MovieRepository = {
         let service = DefaultNetworkService(
             baseURL: Constants.baseURL,
             readToken: Config.tmdbReadToken
         )
+        return TMDBMovieRepository(service: service)
+    }()
 
-        let endpoint = Endpoint(path: "movie/popular")
-        let response: MovieResponse = try await service.request(endpoint)
-        print("Fetched movies:", response.results.count)
-    } catch {
-        print("Error fetching movies:", error)
+    var body: some Scene {
+        WindowGroup {
+            ContentView(repository: repository)
+        }
     }
 }
