@@ -9,15 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var vm: MovieListViewModel
-
+    
     init(repository: MovieRepository) {
         _vm = StateObject(wrappedValue: MovieListViewModel(repository: repository))
     }
-
+    
     var body: some View {
         NavigationStack {
             MovieListView(vm: vm)
                 .navigationTitle("Movies")
+            
+#if DEBUG
+            
+            Button("Clear cache") {
+                vm.invalidateCachesAndReload()
+            }
+            .font(.callout.bold())
+            .foregroundColor(.red)
+#endif
         }
     }
 }

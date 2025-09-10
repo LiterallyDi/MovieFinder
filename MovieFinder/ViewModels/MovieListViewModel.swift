@@ -32,9 +32,23 @@ final class MovieListViewModel: ObservableObject {
         bindSearch()
     }
 
+    // MARK: - cache
+
     func loadInitial() {
         guard movies.isEmpty else { return }
+
+        /// if cache
+        applyCachedPopularIfAvailable()
+
+        /// actual data
         fetchPopular(reset: true)
+    }
+
+    private func applyCachedPopularIfAvailable() {
+        if let cached = repo.cachedPopularPage1() {
+            movies = cached.results
+            seenIDs = Set(movies.map { $0.id })
+        }
     }
 
     // MARK: - Popular
@@ -79,7 +93,7 @@ final class MovieListViewModel: ObservableObject {
                 self?.isLoading = true
                 self?.error = nil
             })
-            .receive(on: DispatchQueue.main) 
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
                 self.isLoading = false
@@ -144,5 +158,25 @@ final class MovieListViewModel: ObservableObject {
         searchHasMore = true
         movies = []
         seenIDs.removeAll()
+    }
+}
+
+// MARK: - cache
+
+@MainActor
+extension MovieListViewModel {
+    func invalidateCachesAndReload() {
+        currentRequest?.cancel()
+        currentRequest = nil
+
+        URLCache.shared.removeAllCachedResponses()
+
+        (repo as? CacheControllable)?.clearCaches()
+
+        resetListState()
+        resetSearchState()
+        query = ""
+
+        fetchPopular(reset: true)
     }
 }

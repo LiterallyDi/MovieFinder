@@ -19,19 +19,44 @@ struct MovieCard: View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            AsyncImage(url: posterURL) { phase in
-                switch phase {
-                case .empty:
-                    ZStack { Rectangle().fill(.quaternary); ProgressView() }
-                case .success(let img):
-                    img.resizable().scaledToFill()
-                        .transition(.opacity.combined(with: .scale(scale: 0.98)))
-                case .failure:
-                    ZStack { Rectangle().fill(.quaternary); Image(systemName: "film").imageScale(.large) }
-                @unknown default:
-                    Rectangle().fill(.quaternary)
+            CachedAsyncImage(
+                url: posterURL,
+                placeholder: {
+                    ZStack {
+                        Rectangle().fill(.quaternary)
+                        ProgressView()
+                    }
+                },
+                failure: {
+                    ZStack {
+                        Rectangle().fill(.quaternary)
+                        Image(systemName: "film").imageScale(.large)
+                    }
+                },
+                content: { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
                 }
-            }
+            )
+
+            .frame(height: 240)
+            .background(Color(.secondarySystemBackground))
+            .mask(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .contentShape(Rectangle())
+//            AsyncImage(url: posterURL) { phase in
+//                switch phase {
+//                case .empty:
+//                    ZStack { Rectangle().fill(.quaternary); ProgressView() }
+//                case .success(let img):
+//                    img.resizable().scaledToFill()
+//                        .transition(.opacity.combined(with: .scale(scale: 0.98)))
+//                case .failure:
+//                    ZStack { Rectangle().fill(.quaternary); Image(systemName: "film").imageScale(.large) }
+//                @unknown default:
+//                    Rectangle().fill(.quaternary)
+//                }
+//            }
             .frame(height: 240)
             .clipped()
             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
@@ -67,7 +92,7 @@ extension MovieCard {
         self.init(
             title: movie.title,
             rating: movie.voteAverage,
-            releaseDate: movie.releaseDate ?? "", 
+            releaseDate: movie.releaseDate ?? "",
             posterURL: ImageURLs.poster(movie.posterPath)
         )
     }

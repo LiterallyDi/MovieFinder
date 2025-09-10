@@ -10,7 +10,12 @@ import Foundation
 
 struct TMDBMovieRepository: MovieRepository {
     private let service: NetworkService
-    init(service: NetworkService) { self.service = service }
+    private let cache: MovieCache?
+    
+    init(service: NetworkService, cache: MovieCache? = UserDefaultsMovieCache()) {
+        self.service = service
+        self.cache = cache
+    }
 
     func fetchPopular(page: Int) -> AnyPublisher<MovieResponse, APIError> {
         service.request(Endpoint(path: "movie/popular",
@@ -37,4 +42,10 @@ struct TMDBMovieRepository: MovieRepository {
                                  method: .GET,
                                  query: [URLQueryItem(name: "language", value: "en-US")]))
     }
+    
+    // MARK: - Cache
+
+      func cachedPopularPage1() -> MovieResponse? {
+          cache?.loadPopularPage1()
+      }
 }
