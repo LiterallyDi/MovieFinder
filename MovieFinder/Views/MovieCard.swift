@@ -19,22 +19,10 @@ struct MovieCard: View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            AsyncImage(url: posterURL) { phase in
-                switch phase {
-                case .empty:
-                    ZStack { Rectangle().fill(.quaternary); ProgressView() }
-                case .success(let img):
-                    img.resizable().scaledToFill()
-                        .transition(.opacity.combined(with: .scale(scale: 0.98)))
-                case .failure:
-                    ZStack { Rectangle().fill(.quaternary); Image(systemName: "film").imageScale(.large) }
-                @unknown default:
-                    Rectangle().fill(.quaternary)
-                }
-            }
-            .frame(height: 240)
-            .clipped()
-            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            CachedImage(url: posterURL, contentMode: .fill, placeholderHeight: 240)
+                .frame(height: 240)
+                .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
 
             LinearGradient(colors: [.clear, .black.opacity(0.8)],
                            startPoint: .top, endPoint: .bottom)
@@ -59,16 +47,5 @@ struct MovieCard: View {
         }
         .contentShape(Rectangle())
         .accessibilityLabel("\(title), rating \(String(format: "%.1f", rating)), year \(year)")
-    }
-}
-
-extension MovieCard {
-    init(movie: Movie) {
-        self.init(
-            title: movie.title,
-            rating: movie.voteAverage,
-            releaseDate: movie.releaseDate ?? "", 
-            posterURL: ImageURLs.poster(movie.posterPath)
-        )
     }
 }

@@ -50,7 +50,12 @@ struct MovieListView: View {
                                 NavigationLink {
                                     MovieDetailView(movieID: movie.id)
                                 } label: {
-                                    MovieCard(movie: movie)
+                                    MovieCard(
+                                        title: movie.title,
+                                        rating: movie.voteAverage,
+                                        releaseDate: movie.releaseDate ?? "",
+                                        posterURL: ImageURLs.poster(movie.posterPath)
+                                    )
                                 }
                                 .buttonStyle(.plain)
                                 .onAppear {

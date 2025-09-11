@@ -25,9 +25,9 @@ struct MovieFinderApp: App {
                 if showSplash {
                     SplashView(isActive: $showSplash)
                 } else {
-                    NavigationStack {
-                        ContentView(repository: repository)
-                    }
+                    ContentView(repository: repository)
+
+                        .modelContainer(for: [FavoriteMovie.self])
                 }
             }
         }

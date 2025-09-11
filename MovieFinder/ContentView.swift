@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var vm: MovieListViewModel
+    private let repository: MovieRepository
 
     init(repository: MovieRepository) {
-        _vm = StateObject(wrappedValue: MovieListViewModel(repository: repository))
+        self.repository = repository
     }
 
     var body: some View {
-        NavigationStack {
-            MovieListView(vm: vm)
-                .navigationTitle("Movies")
-        }
+        AppTabView(repository: repository)
     }
 }

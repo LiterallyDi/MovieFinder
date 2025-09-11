@@ -34,6 +34,13 @@ struct MovieDetailView: View {
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if let m = vm.movie {
+                ToolbarItem(placement: .topBarTrailing) {
+                    FavoriteToggleButton(movie: m)
+                }
+            }
+        }
         .onAppear {
             if vm.movie == nil && vm.isLoading == false {
                 vm.load()
