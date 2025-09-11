@@ -20,8 +20,18 @@ struct MovieListView: View {
             SearchBar(text: $vm.query, placeholder: "Search movies")
 
             if vm.isLoading && vm.movies.isEmpty {
-                LoadingView(title: "Loading movies…")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                GeometryReader { proxy in
+                    let columns = Layout.gridColumns(for: proxy.size)
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 12) {
+                            ForEach(0 ..< 8, id: \.self) { _ in
+                                MovieCardSkeleton()
+                            }
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.bottom, 12)
+                    }
+                }
 
             } else if let message = vm.error, vm.movies.isEmpty {
                 ErrorView(message: message) { vm.retry() }

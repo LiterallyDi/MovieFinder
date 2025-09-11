@@ -23,11 +23,11 @@ struct MovieDetailView: View {
     var body: some View {
         Group {
             if vm.isLoading {
-                LoadingView(title: "Loading details…")
+                MovieDetailSkeleton()
             } else if let message = vm.error {
                 ErrorView(message: message) { vm.retry() }
-            } else if let movie = vm.movie {
-                MovieDetailContent(movie: movie)
+            } else if let m = vm.movie {
+                MovieDetailContent(movie: m)
             } else {
                 NoDataView()
             }
