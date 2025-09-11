@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct MovieFinderApp: App {
+    @State private var showSplash = true
+
     private let repository: MovieRepository = {
         let service = DefaultNetworkService(
             baseURL: Constants.baseURL,
@@ -19,7 +21,15 @@ struct MovieFinderApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(repository: repository)
+            Group {
+                if showSplash {
+                    SplashView(isActive: $showSplash)
+                } else {
+                    NavigationStack {
+                        ContentView(repository: repository)
+                    }
+                }
+            }
         }
     }
 }

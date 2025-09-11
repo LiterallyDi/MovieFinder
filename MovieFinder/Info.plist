@@ -2,13 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleName</key>
-    <string>MovieFinder</string>
-
-    <key>TMDB_READ_TOKEN</key>
-    <string>eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNThmNzhhNzgwOTk3NzgwNjk5NmU5NTk3NTIwOTA4NCIsIm5iZiI6MTc1NzI1OTQ1My41NTIsInN1YiI6IjY4YmRhNmJkMDI1MWZlZmZjZTk0NzRhOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qanbMu8WfyLjsTJo6ForFoS4URvA2ctNRBRIxFB8soI</string>
-
-    <key>TMDB_API_KEY</key>
-    <string>e58f78a7809977806996e95975209084</string>
+	<key>TMDB_API_KEY</key>
+	<string>e58f78a7809977806996e95975209084</string>
+	<key>TMDB_READ_TOKEN</key>
+	<string>eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNThmNzhhNzgwOTk3NzgwNjk5NmU5NTk3NTIwOTA4NCIsIm5iZiI6MTc1NzI1OTQ1My41NTIsInN1YiI6IjY4YmRhNmJkMDI1MWZlZmZjZTk0NzRhOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qanbMu8WfyLjsTJo6ForFoS4URvA2ctNRBRIxFB8soI</string>
 </dict>
 </plist>
