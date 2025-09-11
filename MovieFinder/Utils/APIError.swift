@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct TMDBErrorBody: Codable {
+    let status_code: Int?
+    let status_message: String?
+    let success: Bool?
+}
+
 enum APIError: LocalizedError {
     case transport(URLError)
     case http(status: Int, message: String?)

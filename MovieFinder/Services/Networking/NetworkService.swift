@@ -41,24 +41,35 @@ struct DefaultNetworkService: NetworkService {
         req.setValue("application/json", forHTTPHeaderField: "Accept")
         req.setValue("Bearer \(readToken)", forHTTPHeaderField: "Authorization")
 
+        // Pipeline
+
         return session.dataTaskPublisher(for: req)
-            .tryMap { data, response -> Data in
+            // transport error
+            .mapError { urlError -> APIError in
+                if urlError.code == .timedOut { return .timeout }
+                return .transport(urlError)
+            }
+            .tryMap { data, response in
                 guard let http = response as? HTTPURLResponse else {
                     throw APIError.transport(URLError(.badServerResponse))
                 }
                 guard (200 ... 299).contains(http.statusCode) else {
-                    throw APIError.http(status: http.statusCode, body: data)
+                    let message = (try? JSONDecoder().decode(TMDBErrorBody.self, from: data))?.status_message
+                    throw APIError.http(status: http.statusCode, message: message)
                 }
                 return data
             }
+
             .decode(type: T.self, decoder: decoder)
-            .mapError { err in
-                if let api = err as? APIError { return api }
-                if err is DecodingError { return .decoding(err) }
-                if let urlErr = err as? URLError { return .transport(urlErr) }
-                return .transport(err)
+            .mapError { error -> APIError in
+                if let api = error as? APIError { return api }
+                if let dec = error as? DecodingError { return .decoding(dec) }
+                if let urlErr = error as? URLError {
+                    if urlErr.code == .timedOut { return .timeout }
+                    return .transport(urlErr)
+                }
+                return .unknown(error)
             }
-            .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
 }
