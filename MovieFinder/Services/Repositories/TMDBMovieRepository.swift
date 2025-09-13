@@ -37,4 +37,14 @@ struct TMDBMovieRepository: MovieRepository {
                                  method: .GET,
                                  query: [URLQueryItem(name: "language", value: "en-US")]))
     }
+
+    func videos(id: Int) -> AnyPublisher<MovieVideoResponse, APIError> {
+        service.request(Endpoint(
+            path: "movie/\(id)/videos",
+            method: .GET,
+            query: [
+                URLQueryItem(name: "language", value: "en-US")
+            ]
+        ))
+    }
 }

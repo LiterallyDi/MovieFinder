@@ -27,7 +27,8 @@ struct MovieDetailView: View {
             } else if let message = vm.error {
                 ErrorView(message: message) { vm.retry() }
             } else if let m = vm.movie {
-                MovieDetailContent(movie: m)
+                
+                MovieDetailContent(movie: m, trailers: vm.trailers)
             } else {
                 NoDataView()
             }

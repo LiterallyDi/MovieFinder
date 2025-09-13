@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovieDetailContent: View {
     let movie: Movie
+    var trailers: [MovieVideo] = []
 
     var body: some View {
         ScrollView {
@@ -36,6 +37,11 @@ struct MovieDetailContent: View {
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                 }
+                // MARK: - trailer
+
+                TrailersRow(trailers: trailers)
+                    .padding(.top, 8)
+                    
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
