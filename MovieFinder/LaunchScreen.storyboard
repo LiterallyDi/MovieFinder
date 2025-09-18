@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB"
+          version="3.0"
+          toolsVersion="22505"
+          targetRuntime="iOS.CocoaTouch"
+          propertyAccessControl="none"
+          useAutolayout="YES"
+          initialViewController="VC">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+
+    <scenes>
+        <!-- Launch Screen -->
+        <scene sceneID="Scene">
+            <objects>
+                <viewController id="VC" userLabel="LaunchScreenVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ROOT">
+                        <rect key="frame" x="0" y="0" width="390" height="844"/>
+                        <!-- background -->
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <subviews>
+                            
+                            <imageView userInteractionEnabled="NO"
+                                       contentMode="scaleAspectFit"
+                                       image="LaunchLogo"
+                                       translatesAutoresizingMaskIntoConstraints="NO"
+                                       id="LOGO"/>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="LOGO" firstAttribute="centerX"
+                                        secondItem="ROOT" secondAttribute="centerX" id="cX"/>
+                            <constraint firstItem="LOGO" firstAttribute="centerY"
+                                        secondItem="ROOT" secondAttribute="centerY" id="cY"/>
+                            <constraint firstItem="LOGO" firstAttribute="width"
+                                        secondItem="ROOT" secondAttribute="width"
+                                        multiplier="0.40" id="w"/>
+                            <constraint firstItem="LOGO" firstAttribute="height"
+                                        secondItem="LOGO" secondAttribute="width"
+                                        multiplier="1:1" id="ratio"/>
+                            <constraint firstItem="LOGO" firstAttribute="leading"
+                                        relation="greaterThanOrEqual"
+                                        secondItem="ROOT" secondAttribute="leading"
+                                        constant="20" id="leadMin"/>
+                            <constraint firstAttribute="trailing"
+                                        relation="greaterThanOrEqual"
+                                        secondItem="LOGO" secondAttribute="trailing"
+                                        constant="20" id="trailMin"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder"
+                             id="FR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+
+    <resources>
+        <image name="LaunchLogo" width="1024" height="1024"/>
+    </resources>
+</document>

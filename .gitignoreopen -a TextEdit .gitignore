@@ -1,0 +1,38 @@
+# Xcode
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+*.xcuserdata
+
+# User-specific files
+*.swp
+*~.nib
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# CocoaPods
+Pods/
+
+# Swift Package Manager
+.build/
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Others
+xcuserdata/xcuserdata/
+MovieFinder.xcodeproj/project.xcworkspace/xcuserdata/
